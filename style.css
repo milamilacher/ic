@@ -69,15 +69,15 @@ input, select {
 
 /* Resultados */
 .results-container {
-    margin-top: 30px;
+    margin-top: 15px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border-color);
+    /*padding-top: 20px;*/
+    /*border-top: 1px solid var(--border-color); */
 }
 
-.result-card { text-align: center; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 15px; }
+.result-card { text-align: center; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 15px; }
 .res-value { display: block; font-size: 18px; font-weight: 700; margin-top: 5px; }
 .gain { color: var(--accent); }
 .final { color: var(--accent-orange); }
