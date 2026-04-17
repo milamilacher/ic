@@ -53,7 +53,7 @@
                             <option value="1">Anualmente</option>
                             <option value="2">Semestralmente</option>
                             <option value="4">Trimestralmente</option>
-                            <option value="1.16">Cada 35 días</option>
+                            <option value="1.16">Cada 35 días</option>							
                         </select>
                     </div>
                     <div class="input-group full-width">
@@ -64,8 +64,19 @@
                     </div>
 					
                 </div>
-
-                <div id="results-section" class="results-container hidden">
+            </div>
+			
+			<div class="main-actions">
+				<button id="btn-calculate" class="btn-primary" data-html2canvas-ignore>Calcular Proyección</button>
+				<div id="extra-actions" class="hidden">
+					<button id="btn-download" class="btn-secondary" data-html2canvas-ignore>Descargar Reporte Completo</button>
+					<button id="btn-share" class="btn-whatsapp" data-html2canvas-ignore>Compartir en WhatsApp</button>
+				</div>
+			</div>
+			
+			<div id="results-section" class="calculator-card hidden">
+				<h1>Resultados Generales</h1>
+                <div class="results-container">
                     <div class="result-card">
                         <span class="res-label">Inversión total</span>
                         <span class="res-value total" id="res-total-investment">$0</span>
@@ -83,15 +94,7 @@
                         <span class="res-value final" id="res-final-capital">$0</span>
                     </div>
                 </div>
-            </div>
-			
-			<div class="main-actions">
-				<button id="btn-calculate" class="btn-primary" data-html2canvas-ignore>Calcular Proyección</button>
-				<div id="extra-actions" class="hidden">
-					<button id="btn-download" class="btn-secondary" data-html2canvas-ignore>Descargar Reporte Completo</button>
-					<button id="btn-share" class="btn-whatsapp" data-html2canvas-ignore>Compartir en WhatsApp</button>
-				</div>
-			</div>
+			</div>			
 			
             <div id="evolution-section" class="evolution-container hidden">
                 <div class="table-header">
