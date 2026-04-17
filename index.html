@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Interés Compuesto Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main-container">
+        <div id="export-container" class="capture-wrapper">
+            
+            <div class="calculator-card">
+                <header>
+                    <h1>Calculadora de <span class="accent">Interés Compuesto</span></h1>
+                    <p class="subtitle">Reporte de Proyección Financiera</p>
+                </header>
+
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label>Capital inicial ($)</label>
+                        <input type="number" id="initial-capital" value="1000000">
+                    </div>
+                    <div class="input-group">
+                        <label>Aportación mensual ($)</label>
+                        <input type="number" id="monthly-contribution" value="100000">
+                    </div>
+                    <div class="input-group">
+                        <label>Período</label>
+                        <div class="unit-toggle">
+                            <input type="number" id="period-value" value="20">
+                            <div class="radio-group">
+                                <label><input type="radio" name="period-unit" value="years" checked> Años</label>
+                                <label><input type="radio" name="period-unit" value="months"> Meses</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Tasa de interés (%)</label>
+                        <div class="unit-toggle">
+                            <input type="number" id="interest-rate" value="22">
+                            <div class="radio-group">
+                                <label><input type="radio" name="rate-unit" value="annual" checked> Anual</label>
+                                <label><input type="radio" name="rate-unit" value="monthly"> Mensual</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group full-width">
+                        <label>Frecuencia de capitalización</label>
+                        <select id="compounding-frequency">
+                            <option value="12">Mensualmente</option>
+                            <option value="1">Anualmente</option>
+                            <option value="2">Semestralmente</option>
+                            <option value="4">Trimestralmente</option>
+                            <option value="360">Diariamente (360/año)</option>
+                        </select>
+                    </div>
+                    <div class="input-group full-width">
+                        <label>Costo de Renovación (%)</label> <labelm>  (*) Costos de impuestos provinciales y sellos que se cobran al constituir o renovar la inversión.</labelm>
+                        <div class="unit-toggle">						
+                            <input type="number" id="renewal-cost-rate" value="0.1">
+                        </div>											
+                    </div>
+					
+                </div>
+
+                <div id="results-section" class="results-container hidden">
+                    <div class="result-card">
+                        <span class="res-label">Inversión total</span>
+                        <span class="res-value total" id="res-total-investment">$0</span>
+                    </div>
+                    <div class="result-card">
+                        <span class="res-label">Ganancia total</span>
+                        <span class="res-value gain" id="res-total-gain">$0</span>
+                    </div>
+                    <div class="result-card">
+                        <span class="res-label">Costo total </span>
+                        <span class="res-value cost" id="res-total-cost">$0</span>
+                    </div>
+                    <div class="result-card">
+                        <span class="res-label">Capital final</span>
+                        <span class="res-value final" id="res-final-capital">$0</span>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="main-actions">
+				<button id="btn-calculate" class="btn-primary" data-html2canvas-ignore>Calcular Proyección</button>
+				<div id="extra-actions" class="hidden">
+					<button id="btn-download" class="btn-secondary" data-html2canvas-ignore>Descargar Reporte Completo</button>
+					<button id="btn-share" class="btn-whatsapp" data-html2canvas-ignore>Compartir en WhatsApp</button>
+				</div>
+			</div>
+			
+            <div id="evolution-section" class="evolution-container hidden">
+                <div class="table-header">
+                    <h2>Evolución del Capital</h2>
+                    <div class="view-toggle" data-html2canvas-ignore> <button id="view-annual" class="active">Anual</button>
+                        <button id="view-monthly">Mensual</button>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table id="progresion-table">
+                        <thead>
+                            <tr>
+                                <th id="col-time">Año</th>
+                                <th>Capital ($)</th>
+                                <th>Ganancia ($)</th>
+                                <th>Cost ($)</th>																
+                                <th>Total ($)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body"></tbody>
+                    </table>
+                </div>
+                <p class="watermark">Generado con SuerteActiva Pro</p>
+            </div>
+			
+        </div>
+
+    </div>
+		
+	<div id="download-modal" class="modal-overlay hidden">
+		<div class="modal-card">
+			<h3>Selecciona el formato</h3>
+			<p>¿Cómo deseas exportar tu proyección financiera?</p>
+			<div class="modal-actions">
+				<button id="confirm-image" class="btn-modal">
+					<span class="icon">🖼️</span> Imagen (PNG)
+				</button>
+				<button id="confirm-excel" class="btn-modal">
+					<span class="icon">📊</span> Planilla (Excel)
+				</button>
+			</div>
+			<button id="close-modal" class="btn-close">Cancelar</button>
+		</div>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+	<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+	
+	<script src="script.js"></script>	
+</body>
+</html>
